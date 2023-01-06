@@ -38,3 +38,18 @@ show tables;
 
 -- insert: DML(C)
 insert into pet values('삼색이','쭈인','cat','f',null,null);
+
+-- select: DML(R)
+select * from pet;
+
+-- update: DML(U)
+update pet set name='리리' where name = '삼색이';
+
+-- delete: DML(D)
+delete from pet where name = '리리';
+
+-- load data
+load data local infile 'd:\pet.txt' into table pet;
+
+-- select
+select name, species from pet where name = 'bowser';
