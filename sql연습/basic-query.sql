@@ -38,5 +38,3 @@ show tables;
 
 -- insert: DML(C)
 insert into pet values('삼색이','쭈인','cat','f',null,null);
-
-select * from pet;
