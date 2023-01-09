@@ -12,6 +12,10 @@ select first_name as 이름, gender as 성별, hire_date as 입사일 from emplo
 -- 여직원과 남직원은 각 각 몇 명이나 있나요? (각 각 출력 -> 쿼리 2개)
 select gender, count(*) from employees group by gender;
 
+select count(case when gender='m' then 1 end) as M,
+       count(case when gender='f' then 1 end) as F
+       from employees;
+
 -- 문제4.
 -- 현재(to_date 9999-01-01) 근무하고 있는 직원 수는 몇 명입니까? (salaries 테이블을 사용합니다.) 
 select count(emp_no) as '직원 수' from salaries where to_date = '9999-01-01';
