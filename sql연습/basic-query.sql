@@ -45,11 +45,41 @@ select * from pet;
 -- update: DML(U)
 update pet set name='리리' where name = '삼색이';
 
+update pet
+	set death = null
+where name != 'Bowser';
+
 -- delete: DML(D)
 delete from pet where name = '리리';
 
 -- load data
 load data local infile 'd:\pet.txt' into table pet;
 
--- select
+-- select 연습
 select name, species from pet where name = 'bowser';
+
+select name, species from pet where birth >= '1998-01-01';
+
+select name, species, gender from pet where species = 'dog' and gender = 'f';
+
+select name, species from pet where species = 'snake' or species = 'bird';
+
+select name,species from pet order by birth desc;
+
+select name,birth,death from pet where death is not null;
+
+select name from pet where name like 'b%';
+
+select name from pet where name like '%fy';
+
+select name from pet where name like '%w%';
+
+select name from pet where name like '_____';
+
+select name from pet where name like 'b____';
+
+-- count에는 * 쓰는게 좋음 column 명시하면 null이 아닌 데이터의 개수
+select count(*) from pet;
+
+
+
