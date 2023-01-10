@@ -95,5 +95,3 @@ and s.to_date = '9999-01-01'
 and t.title = 'Engineer'
 group by d.dept_name
 order by avg(s.salary) desc;
-
--- outer join
