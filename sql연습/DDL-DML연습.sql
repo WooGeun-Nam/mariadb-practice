@@ -1,0 +1,23 @@
+-- DDL (데이터 정의어)
+drop table member;
+create table member (
+	no int not null auto_increment,
+    email varchar(100) not null,
+    password varchar(64) not null,
+    name varchar(100) not null,
+    department varchar(100),
+    primary key(no)
+);
+desc member;
+
+alter table member add column juminbunho char(13) not null;
+
+alter table member drop juminbunho;
+
+alter table member add column juminbunho char(13) not null after email;
+
+alter table member change column department dept varchar(200) not null;
+
+alter table member add self_intro text;
+
+alter table member drop juminbunho;
