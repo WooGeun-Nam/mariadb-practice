@@ -19,18 +19,18 @@ order by e.first_name;
 -- 문제3.
 -- 전체 사원의 사번, 이름, 현재 부서를 이름 순서로 출력하세요..
 select e.emp_no, e.first_name, d.dept_name
-from employees e join dept_emp de
+from employees e left join dept_emp de
 on e.emp_no = de.emp_no
-join departments d
+left join departments d
 on de.dept_no = d.dept_no
 where de.to_date = '9999-01-01';
 
 -- 문제4.
 -- 전체 사원의 사번, 이름, 연봉, 직책, 부서를 모두 이름 순서로 출력합니다.
 select e.emp_no, concat(e.first_name,' ',e.last_name), s.salary, t.title, d.dept_name
-from employees e join dept_emp de
+from employees e left join dept_emp de
 on e.emp_no = de.emp_no
-join departments d
+left join departments d
 on de.dept_no = d.dept_no
 join titles t
 on e.emp_no = t.emp_no
@@ -52,9 +52,9 @@ and t.to_date != '9999-01-01';
 -- 문제6.
 -- 직원 이름(last_name) 중에서 S(대문자)로 시작하는 직원들의 이름, 부서명, 직책을 조회하세요.
 select concat(e.first_name,' ',e.last_name), d.dept_name, t.title
-from employees e join dept_emp de
+from employees e left join dept_emp de
 on e.emp_no = de.emp_no
-join departments d
+left join departments d
 on de.dept_no = d.dept_no
 join titles t
 on e.emp_no = t.emp_no
