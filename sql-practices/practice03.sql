@@ -41,6 +41,12 @@ and s.to_date = '9999-01-01'
 and t.to_date = '9999-01-01'
 order by concat(e.first_name,' ',e.last_name);
 
+SELECT first_name
+     , MAX(birth_date) KEEP(DENSE_RANK LAST ORDER BY hire_date)   AS sal_last
+     , MAX(gender) KEEP(DENSE_RANK LAST ORDER BY hire_date) AS ename_last
+  FROM employees
+ GROUP BY first_name;
+
 -- 문제5.
 -- ‘Technique Leader’의 직책으로 과거에 근무한 적이 있는 모든 사원의 사번과 이름을 출력하세요. (현재 ‘Technique Leader’의 직책(으로 근무하는 사원은 고려하지 않습니다.) 이름은 first_name과 last_name을 합쳐 출력 합니다.
 select e.emp_no, concat(e.first_name,' ',e.last_name)
