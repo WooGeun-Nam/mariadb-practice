@@ -87,4 +87,77 @@ group by t.title
 order by avg_salary
 limit 0,1;
     
--- 3-2) 복수행 연산자: 
+-- 3-2) 복수행 연산자: in, not in, 비교연산자any, 비교연산자all
+
+-- any 사용법
+-- 1. =any : in
+-- 2. >any, >=any : 최솟값
+-- 3. <any, <=any : 최댓값
+-- 4. <>any, !=any : not in
+
+-- all 사용법
+-- 1. =all : (x)
+-- 2. >all, >=all : 최댓값
+-- 3. <all, <=all : 최솟값
+-- 4. <>all, !=all
+
+-- 실습문제3
+-- 현재 급여가 50000 이상인 직원의 이름과 급여를 출력 하세요.
+-- 돌리 6000
+-- 또치 8000
+
+-- sol1) join
+select e.first_name, s.salary
+from employees e
+join salaries s on e.emp_no = s.emp_no
+where s.to_date = '9999-01-01'
+and s.salary >= 50000
+order by s.salary;
+
+-- sol2) subquery multi coulmn
+select e.first_name, s.salary
+from employees e
+join salaries s
+on e.emp_no = s.emp_no
+and s.to_date = '9999-01-01'
+and (e.emp_no, s.salary) =any (
+	select emp_no, salary
+	from salaries
+	where to_date = '9999-01-01'
+	and salary >= 50000 )
+order by s.salary;
+
+-- 실습문제4: 현재, 각 부서별로 최고 급여를 받고 있는 직원의 이름과 월급을 출력 하세요.
+-- 총무 둘리 4000
+-- 영업 또치 5000
+
+-- sol1: where절 subquery(in)
+select d.dept_name, e.first_name, s.salary
+from departments d
+join dept_emp de on d.dept_no = de.dept_no
+join employees e on de.emp_no = e.emp_no
+join salaries s on e.emp_no = s.emp_no
+where de.to_date = '9999-01-01'
+and s.to_date = '9999-01-01'
+and (d.dept_no, s.salary) in (
+	select de.dept_no, max(s.salary)
+	from dept_emp de
+	join salaries s on de.emp_no = s.emp_no
+	where de.to_date = '9999-01-01'
+	and s.to_date = '9999-01-01'
+	group by de.dept_no);
+
+-- sol2: from절 join
+select d.dept_name, e.first_name, s.salary
+from departments d
+join dept_emp de on d.dept_no = de.dept_no
+join employees e on de.emp_no = e.emp_no
+join salaries s on e.emp_no = s.emp_no
+join (select de.dept_no, max(s.salary) as max_salary
+	from dept_emp de
+	join salaries s on de.emp_no = s.emp_no
+	where de.to_date = '9999-01-01'
+	and s.to_date = '9999-01-01'
+	group by de.dept_no) a on de.dept_no = a.dept_no and s.salary = a.max_salary
+where de.to_date = '9999-01-01'
+and s.to_date = '9999-01-01';
