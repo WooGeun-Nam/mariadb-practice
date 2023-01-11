@@ -4,7 +4,7 @@
   <artifactId>jdbc-practice</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
-    <packaging>jar</packaging>
+   <packaging>jar</packaging>
    
    <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -12,8 +12,18 @@
       <maven.compiler.source>17</maven.compiler.source>
       <maven.compiler.target>17</maven.compiler.target>
    </properties>
-  
-    <build>
+   
+   <dependencies>
+	   <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
+	   <!-- MariaDB JDBC Driver -->
+		<dependency>
+		    <groupId>org.mariadb.jdbc</groupId>
+		    <artifactId>mariadb-java-client</artifactId>
+		    <version>3.0.8</version>
+		</dependency>
+   </dependencies>
+   
+   <build>
 	  <finalName>jdbc-practice</finalName>
-  </build>
+   </build>
 </project>
