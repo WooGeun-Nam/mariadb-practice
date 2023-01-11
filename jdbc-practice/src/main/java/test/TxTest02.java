@@ -70,6 +70,8 @@ public class TxTest02 {
 		} catch (SQLException e) {
 			conn.rollback(); // 롤백을 안한다고 알아서 되는것이 아님
 			e.printStackTrace();
+		} finally {
+			conn.setAutoCommit(true); // 원상복귀
 		}
 	}
 }
