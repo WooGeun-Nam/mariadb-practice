@@ -2,6 +2,9 @@ package bookshop.main;
 
 import java.util.Scanner;
 
+import bookshop.dao.BookDao;
+import bookshop.vo.BookVo;
+
 public class BookShop {
 
 	public static void main(String[] args) {

@@ -1,5 +1,8 @@
 package bookshop.dao.test;
 
+import bookshop.dao.AuthorDao;
+import bookshop.vo.AuthorVo;
+
 public class AuthorDaoTest {
 
 	public static void main(String[] args) {
