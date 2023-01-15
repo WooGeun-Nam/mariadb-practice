@@ -11,7 +11,7 @@ public class UserDaoTest {
 		testFindAll();
 	}
 
-	private static void testInsert() {
+	public static void testInsert() {
 		UserVo vo = null;
 		UserDao dao = new UserDao();
 		
@@ -32,10 +32,10 @@ public class UserDaoTest {
 		}
 	}
 
-	private static void testFindAll() {
+	public static void testFindAll() {
 		List<UserVo> list = new UserDao().findAll();
 		for(UserVo vo : list) {
-			System.out.println(vo);
+			System.out.println("| 이름 : "+vo.getName()+" | 전화번호 : "+vo.getPhoneNumber()+" | 이메일 : "+vo.getEmail()+" | 비밀번호 : "+vo.getPassword()+" |");
 		}
 	}
 }

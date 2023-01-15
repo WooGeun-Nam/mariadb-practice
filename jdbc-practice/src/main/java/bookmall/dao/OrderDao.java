@@ -8,8 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import bookmall.vo.BookVo;
 import bookmall.vo.CartVo;
 import bookmall.vo.OrderVo;
+import bookmall.vo.UserVo;
 
 public class OrderDao {
 	public List<OrderVo> findAll() {
@@ -24,7 +26,8 @@ public class OrderDao {
 			conn = getConnection();
 
 			// 3. Statement 준비
-			String sql = "select no, ordernumber, price, address, user_no from orders order by no asc";
+			String sql = "select o.ordernumber, u.name, u.email, o.price, o.address "
+					+ "from orders o join user u on o.user_no = u.no order by o.no";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. SQL 실행 쿼리끝에 세미클론 X
@@ -33,11 +36,15 @@ public class OrderDao {
 			// 5. 결과 처리
 			while (rs.next()) {
 				OrderVo vo = new OrderVo();
-				vo.setNo(rs.getLong(1));
-				vo.setOrdernumber(rs.getString(2));
-				vo.setPrice(rs.getLong(3));
-				vo.setAddress(rs.getString(4));
-				vo.setUserNo(rs.getLong(5));
+				
+				UserVo userVo = new UserVo();
+				userVo.setName(rs.getString(2));
+				userVo.setEmail(rs.getString(3));
+				
+				vo.setUserVo(userVo);
+				vo.setOrdernumber(rs.getString(1));
+				vo.setPrice(rs.getLong(4));
+				vo.setAddress(rs.getString(5));
 				
 				result.add(vo);
 			}
@@ -60,7 +67,8 @@ public class OrderDao {
 		return result;
 	}
 	
-	public void findAllByOrderBook() {
+	public List<OrderVo> findAllByOrderBook() {
+		List<OrderVo> result = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -70,7 +78,8 @@ public class OrderDao {
 			conn = getConnection();
 
 			// 3. Statement 준비
-			String sql = "select no, quantity, book_no, user_no from order_book order by no asc";
+			String sql = "select b.no, b.title, ob.quantity from order_book ob "
+					+ "join book b on ob.book_no = b.no order by ob.no asc";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. SQL 실행 쿼리끝에 세미클론 X
@@ -79,15 +88,16 @@ public class OrderDao {
 			// 5. 결과 처리
 			while (rs.next()) {
 				OrderVo vo = new OrderVo();
-				vo.setNo(rs.getLong(1));
-				vo.setOrdernumber(rs.getString(2));
-				vo.setPrice(rs.getLong(3));
-				vo.setAddress(rs.getString(4));
-				vo.setUserNo(rs.getLong(5));
 				
-				System.out.println(rs.getLong(1)+":"+rs.getLong(2)+":"+rs.getLong(3)+":"+rs.getLong(4));
+				BookVo bookVo = new BookVo();
+				bookVo.setNo(rs.getLong(1));
+				bookVo.setTitle(rs.getString(2));
+				
+				vo.setBookVo(bookVo);
+				vo.setQuantity(rs.getLong(3));
+				
+				result.add(vo);
 			}
-
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} finally {
@@ -102,6 +112,7 @@ public class OrderDao {
 				System.out.println("error:" + e);
 			}
 		}
+		return result;
 	}
 
 	public void insert(OrderVo vo) {
@@ -149,14 +160,11 @@ public class OrderDao {
 			conn = getConnection();
 			
 			List<CartVo> list = new CartDao().findUser(vo.getUserNo());
-//			for(CartVo cVo : list) {
-//				System.out.println(list);
-//			}
 			String sql = "insert into order_book values(null, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
-			for(CartVo cVo : list) {
-				pstmt.setLong(1, cVo.getQuantity());
-				pstmt.setLong(2, cVo.getBookNo());
+			for(CartVo cartVo : list) {
+				pstmt.setLong(1, cartVo.getQuantity());
+				pstmt.setLong(2, cartVo.getBookNo());
 				pstmt.setLong(3, vo.getNo());
 				
 				pstmt.executeUpdate();

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import bookmall.vo.BookVo;
 import bookmall.vo.CartVo;
 
 public class CartDao {
@@ -23,7 +24,7 @@ public class CartDao {
 			conn = getConnection();
 
 			// 3. Statement 준비
-			String sql = "select no, quantity, user_no, book_no from cart order by no asc";
+			String sql = "select b.title, c.quantity, b.price from cart c join book b on c.book_no = b.no order by c.no";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. SQL 실행 쿼리끝에 세미클론 X
@@ -32,10 +33,13 @@ public class CartDao {
 			// 5. 결과 처리
 			while (rs.next()) {
 				CartVo vo = new CartVo();
-				vo.setNo(rs.getLong(1));
+				
+				BookVo bookVo = new BookVo();
+				bookVo.setTitle(rs.getString(1));
+				bookVo.setPrice(rs.getLong(3));
+				
+				vo.setBookVo(bookVo);
 				vo.setQuantity(rs.getLong(2));
-				vo.setUserNo(rs.getLong(3));
-				vo.setBookNo(rs.getLong(4));
 				
 				result.add(vo);
 			}

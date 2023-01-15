@@ -1,36 +1,40 @@
 package bookmall.main;
 
+import bookmall.dao.test.*;
+
 public class BookMall {
 
 	public static void main(String[] args) {
 		
 		// 사용자 2
-		BookFunction.UserInsert();
+		UserDaoTest.testInsert();
 		System.out.println("####### 회원리스트 #######");
-		BookFunction.UserFindAll();
+		UserDaoTest.testFindAll();
 		
 		// 컴퓨터 인문학 교양 3
-		BookFunction.CategoryInsert();
+		CategoryDaoTest.testInsert();
 		System.out.println("####### 카테고리 #######");
-		BookFunction.CategoryFindAll();
+		CategoryDaoTest.testFindAll();
 		
 		// 카테고리 + 상품 3개
-		BookFunction.BookInsert();
+		BookDaoTest.testInsert();
 		System.out.println("####### 상품리스트 #######");
-		BookFunction.BookFindAll();
+		BookDaoTest.testFindAll();
 		
 		// 카트 리스트 2개
-		BookFunction.CartInsert();
+		CartDaoTest.testInsert();
 		System.out.println("####### 카트 #######");
-		BookFunction.CartFindAll();
+		CartDaoTest.testFindAll();
 		
 		// 주문 리스트 1개
-		BookFunction.OrderInsert();
+		OrderDaoTest.testInsert();
 		System.out.println("####### 주문 #######");
-		BookFunction.OrderFindAll();
+		OrderDaoTest.testFindAll();
 		
 		// 주문 도서 리스트 2개
+		OrderDaoTest.testInsertToOrderBook();
 		System.out.println("####### 주문 도서 #######");
+		OrderDaoTest.testFindByOrderBook();
 		
 	}
 }

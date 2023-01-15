@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bookmall.vo.BookVo;
+import bookmall.vo.CategoryVo;
 
 public class BookDao {
 	public List<BookVo> findAll() {
@@ -23,7 +24,7 @@ public class BookDao {
 			conn = getConnection();
 
 			// 3. Statement 준비
-			String sql = "select no, title, price, category_no from book order by no asc";
+			String sql = "select c.name, b.title, b.price from book b join category c on b.category_no = c.no order by b.no";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. SQL 실행 쿼리끝에 세미클론 X
@@ -32,10 +33,13 @@ public class BookDao {
 			// 5. 결과 처리
 			while (rs.next()) {
 				BookVo vo = new BookVo();
-				vo.setNo(rs.getLong(1));
+				
+				CategoryVo categoryVo = new CategoryVo();
+				categoryVo.setName(rs.getString(1));
+				
+				vo.setCategoryVo(categoryVo);
 				vo.setTitle(rs.getString(2));
 				vo.setPrice(rs.getLong(3));
-				vo.setCategoryNo(rs.getLong(4));
 				
 				result.add(vo);
 			}

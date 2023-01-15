@@ -11,7 +11,7 @@ public class CategoryDaoTest {
 		testFindAll();
 	}
 
-	private static void testInsert() {
+	public static void testInsert() {
 		CategoryVo vo = null;
 		CategoryDao dao = new CategoryDao();
 		
@@ -24,10 +24,10 @@ public class CategoryDaoTest {
 		}
 	}
 
-	private static void testFindAll() {
+	public static void testFindAll() {
 		List<CategoryVo> list = new CategoryDao().findAll();
 		for(CategoryVo vo : list) {
-			System.out.println(vo);
+			System.out.println("| 카테고리번호 : "+vo.getNo()+" | 카테고리이름 : "+vo.getName()+" |");
 		}
 	}
 }

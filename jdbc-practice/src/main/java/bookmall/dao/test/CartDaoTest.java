@@ -3,27 +3,28 @@ package bookmall.dao.test;
 import java.util.List;
 
 import bookmall.dao.CartDao;
+import bookmall.vo.BookVo;
 import bookmall.vo.CartVo;
 
 public class CartDaoTest {
 	public static void main(String[] args) {
 		//testInsert();
-		//testFindAll();
-		testFindUser();
+		testFindAll();
+		//testFindUser();
 	}
 
-	private static void testFindUser() {
+	public static void testFindUser() {
 		List<CartVo> list = new CartDao().findUser(1L);
 		for(CartVo vo : list) {
 			System.out.println(vo);
 		}
 	}
 
-	private static void testInsert() {
+	public static void testInsert() {
 		CartVo vo = null;
 		CartDao dao = new CartDao();
 		
-		Long[] data1 = {2L,1L};
+		Long[] data1 = {2L,2L};
 		Long[] data2 = {2L,3L};
 		Long[] data3 = {4L,2L};
 		
@@ -37,10 +38,11 @@ public class CartDaoTest {
 		}
 	}
 
-	private static void testFindAll() {
+	public static void testFindAll() {
 		List<CartVo> list = new CartDao().findAll();
 		for(CartVo vo : list) {
-			System.out.println(vo);
+			BookVo bookVo = vo.getBookVo();
+			System.out.println("| 도서제목 : "+bookVo.getTitle()+" | 수량 : "+vo.getQuantity()+" | 가격 : "+bookVo.getPrice()+" |");
 		}
 	}
 }

@@ -5,6 +5,7 @@ public class CartVo {
 	private Long quantity;
 	private Long userNo;
 	private Long bookNo;
+	private BookVo bookVo;
 	public Long getNo() {
 		return no;
 	}
@@ -29,9 +30,15 @@ public class CartVo {
 	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
+	public BookVo getBookVo() {
+		return bookVo;
+	}
+	public void setBookVo(BookVo bookVo) {
+		this.bookVo = bookVo;
+	}
 	@Override
 	public String toString() {
-		return "CartVo [no=" + no + ", quantity=" + quantity + ", memberNo=" + userNo + ", bookNo=" + bookNo + "]";
+		return "CartVo [no=" + no + ", quantity=" + quantity + ", userNo=" + userNo + ", bookNo=" + bookNo + ", bookVo="
+				+ bookVo + "]";
 	}
-	
 }
