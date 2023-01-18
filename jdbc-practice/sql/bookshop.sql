@@ -15,3 +15,11 @@ update book set rent = Y where no = no;
 select name from author where no = 1;
 
 select * from book;
+
+select * from emaillist;
+
+desc guestbook;
+
+select no, name, password, message, date_format(reg_date, '%Y-%m-%d') from guestbook order by no desc;
+
+delete from guestbook where no = 2 and password = 'dooly';
